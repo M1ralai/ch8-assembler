@@ -15,19 +15,15 @@ func write(instr string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var high uint8
-	high = byte(value >> 8)
-	var low uint8
-	low = byte(value & 0xFF)
+	high := byte((value & 0xFF00) >> 8)
+	low := byte(value & 0x00FF)
+	fmt.Println(high, low)
 	file, err := os.OpenFile("out/output.ch8", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
-	if _, err := file.Write([]byte{high}); err != nil {
-		log.Fatal(err)
-	}
-	if _, err := file.Write([]byte{low}); err != nil {
+	if _, err := file.Write([]byte{high, low}); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -134,7 +130,7 @@ func ADD(line string) {
 				search += string(s[2][i])
 			}
 		}
-		write("8" + string(s[1][1]) + search)
+		write("7" + string(s[1][1]) + search)
 	}
 }
 
