@@ -1,1 +1,5 @@
 .DS_Store
+cmd/.DS_Store
+emu/
+cmd/asm
+bin/
